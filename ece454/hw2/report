@@ -1,0 +1,7 @@
+Cristian Valentini
+998156052
+
+
+Fundamentally, the solution that I present to you in kernels.c is very similar to the optimizaton which was described to us in lecture for matrix multiplication.  This algorthm attempts to break down a large matrix into several smaller ones, whose elements will fit within the L1 cache of the system.  Therefore the size of the "mini matrix" (if you will) that is created is entirely dependent on the size of the L1 cahce.  Since we know the L1 cache on a UG machine is 32kB and 1 pixel is 6B, we can determine (with a little bit of math) the number of elements that fit in the cache.  This happens to be around 105 elements (this is found from the equation sqrt(((32*2^12)/6)/2) ).  Therefore the size of the "mini matrix" should not exceed this number.  Since we can assume that all possible inputs will be a multiple of 32, this elemenates all numbers but 2, 4, 8, 16, 32, and 64.  The actual value used is heavily dependent upon the input.
+
+The input is then divided by the "mini matrix" size through the form of a binary shift to the right.  This is to determine the number of smaller matrices the loops must actually run through.  The rest that follows is just the exchange between the two matrices.  The first step is an access in the far column of the original image which gets inserted into the first position of the new image.  The original image then gets the coloumns traversed while the new image is accessed by its rows.  
